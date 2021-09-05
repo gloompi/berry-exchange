@@ -84,6 +84,10 @@ contract('Token', ([deployer, receiver, exchange]) => {
         invalidAmount = tokens(10);
         await token.transfer(deployer, invalidAmount, { from: receiver }).should.be.rejectedWith(EVM_REVERT);
       })
+
+      it('rejects invalid recipients', async () => {
+        await token.transfer(0x0, tokens(10), { from: deployer }).should.be.rejected
+      })
     })
   })
 
@@ -109,6 +113,12 @@ contract('Token', ([deployer, receiver, exchange]) => {
         event._owner.toString().should.equal(deployer, 'owner is correct');
         event._spender.toString().should.equal(exchange, 'spender is correct');
         event._value.toString().should.equal(amount.toString(), 'value is correct');
+      })
+    })
+
+    describe('failure', () => {
+      it('rejects invalid spender', async () => {
+        await token.approve(0x0, amount, { from: deployer }).should.be.rejected
       })
     })
   })
@@ -154,6 +164,10 @@ contract('Token', ([deployer, receiver, exchange]) => {
       it('rejects insufficient amounts', async () => {
         const invalidAmount = tokens(100000000);
         await token.transferFrom(deployer, receiver, invalidAmount, { from: exchange }).should.be.rejectedWith(EVM_REVERT);
+      })
+
+      it('rejects invalid recipients', async () => {
+        await token.transferFrom(deployer, 0x0, amount, { from: exchange }).should.be.rejected
       })
     })
   })

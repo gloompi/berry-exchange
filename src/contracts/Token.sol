@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: MIT
 pragma solidity >=0.4.22 <0.9.0;
 
-contract Token {
+import "./Ownable.sol";
+
+contract Token is Ownable {
   string public name = "Berry Token";
   string public symbol = "BERRY";
   uint256 public decimals = 18;
@@ -15,6 +17,10 @@ contract Token {
   constructor() {
     totalSupply = 1000000 * (10 ** decimals);
     balanceOf[msg.sender] = totalSupply;
+  }
+
+  function kill() public onlyOwner {
+    selfdestruct(owner());
   }
 
   function _transfer(address _from, address _to, uint256 _value) internal {
