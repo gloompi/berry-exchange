@@ -1,4 +1,4 @@
-import { ETHER_ADDRESS, EVM_REVERT, ether, tokens } from './helers';
+import { ETHER_ADDRESS, EVM_REVERT, ether, tokens } from './helpers';
 
 const Token = artifacts.require("Token");
 const Exchange = artifacts.require("Exchange");
@@ -11,7 +11,7 @@ contract('Exchange', ([deployer, feeAccount, user1, user2]) => {
   let token;
   let exchange;
   const feePercent = 10;
- 
+
   beforeEach(async () => {
     token = await Token.new();
     token.transfer(user1, tokens(100), { from: deployer });
@@ -189,7 +189,7 @@ contract('Exchange', ([deployer, feeAccount, user1, user2]) => {
       result.toString().should.equal(ether(1).toString());
     })
   })
-  
+
   describe('making orders', async () => {
     let result;
 

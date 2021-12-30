@@ -65,7 +65,7 @@ module.exports = async function(callback) {
     console.log(`Made order from ${user1}`)
 
     // User 1 cancells order
-    orderId = result.logs[0].args.id
+    orderId = result.logs[0]?.args.id
     await exchange.cancelOrder(orderId, { from: user1 })
     console.log(`Cancelled order from ${user1}`)
 
@@ -78,7 +78,7 @@ module.exports = async function(callback) {
     console.log(`Made order from ${user1}`)
 
     // User 2 fills order
-    orderId = result.logs[0].args.id
+    orderId = result.logs[0]?.args.id
     await exchange.fillOrder(orderId, { from: user2 })
     console.log(`Filled order from ${user1}`)
 
@@ -90,7 +90,7 @@ module.exports = async function(callback) {
     console.log(`Made order from ${user1}`)
 
     // User 2 fills another order
-    orderId = result.logs[0].args.id
+    orderId = result.logs[0]?.args.id
     await exchange.fillOrder(orderId, { from: user2 })
     console.log(`Filled order from ${user1}`)
 
@@ -102,7 +102,7 @@ module.exports = async function(callback) {
     console.log(`Made order from ${user1}`)
 
     // User 2 fills final order
-    orderId = result.logs[0].args.id
+    orderId = result.logs[0]?.args.id
     await exchange.fillOrder(orderId, { from: user2 })
     console.log(`Filled order from ${user1}`)
 

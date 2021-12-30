@@ -1,4 +1,4 @@
-import { EVM_REVERT, tokens } from './helers';
+import { EVM_REVERT, tokens } from './helpers';
 
 const Token = artifacts.require("Token");
 
@@ -12,7 +12,7 @@ contract('Token', ([deployer, receiver, exchange]) => {
   const decimals = '18';
   const totalSupply = tokens(1000000).toString();
   let token;
- 
+
   beforeEach(async () => {
     token = await Token.new();
   })
@@ -27,12 +27,12 @@ contract('Token', ([deployer, receiver, exchange]) => {
       const result = await token.symbol();
       result.should.equal(symbol);
     })
-    
+
     it('tracks the decimals', async () => {
       const result = await token.decimals();
       result.toString().should.equal(decimals);
     })
-    
+
     it('tracks the total supply', async () => {
       const result = await token.totalSupply();
       result.toString().should.equal(totalSupply);
@@ -61,11 +61,11 @@ contract('Token', ([deployer, receiver, exchange]) => {
       it('able to transfer tokens', async () => {
         const deployerBalanceAfterTransfer = await token.balanceOf(deployer);
         const receiverBalanceAfterTransfer = await token.balanceOf(receiver);
-  
+
         deployerBalanceAfterTransfer.toString().should.equal(deployerBalance.sub(amount).toString());
         receiverBalanceAfterTransfer.toString().should.equal(receiverBalance.add(amount).toString());
       })
-  
+
       it('emits a transfer event', async () => {
         const log = result.logs[0];
         const event = log.args;
@@ -145,11 +145,11 @@ contract('Token', ([deployer, receiver, exchange]) => {
       it('able to transfer tokens', async () => {
         const deployerBalanceAfterTransfer = await token.balanceOf(deployer);
         const receiverBalanceAfterTransfer = await token.balanceOf(receiver);
-  
+
         deployerBalanceAfterTransfer.toString().should.equal(deployerBalance.sub(amount).toString());
         receiverBalanceAfterTransfer.toString().should.equal(receiverBalance.add(amount).toString());
       })
-  
+
       it('emits a transfer event', async () => {
         const log = result.logs[0];
         const event = log.args;
