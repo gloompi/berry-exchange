@@ -12,6 +12,12 @@ export const Web3Provider = ({ children }) => {
 
   const web3 = new Web3(window.ethereum || "ws://localhost:8545");
 
+  try {
+    window.ethereum.enable();
+  } catch (error) {
+    console.error(error);
+  }
+
   return (
     <Web3Context.Provider value={web3}>{children}</Web3Context.Provider>
   )
